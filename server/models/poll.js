@@ -19,7 +19,7 @@ const PollSchema = new Schema(
 )
 
 PollSchema.pre('save', function(next) {
-    this.slug = slugify(this.name, { lower: true })
+    this.slug = slugify(this.title, { lower: true })
 });
 
 export default mongoose.model('Poll', PollSchema);

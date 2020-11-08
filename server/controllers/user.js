@@ -14,11 +14,11 @@ export const get = catchAsyncErrors(async(req, res, next) => {
 
 export const list = catchAsyncErrors(async(req, res, next) => {
     const result = await userService.listUsers();
-    if(!result) {
+    /*if(!result) {
         return next(
             new ErrorHandler(`Det er foreløpig ikke opprettet noen brukere`, 404)
         )
-    }
+    }*/
     res.status(200).json(result);
 });
 

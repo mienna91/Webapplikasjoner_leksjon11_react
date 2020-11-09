@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "debug": "nodemon --inspect server.js"
   },
   "devDependencies": {
     "eslint": "^7.10.0",

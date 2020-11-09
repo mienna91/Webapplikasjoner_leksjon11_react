@@ -17,7 +17,7 @@ const PollSchema = new Schema(
   { timestamps: true }
 );
 
-PollSchema.pre('save', function (next) {
+PollSchema.pre('save', async function (next) {
   this.slug = slugify(this.title, { lower: true });
 });
 

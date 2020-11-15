@@ -8,5 +8,6 @@ router.get('/', userController.list);
 router.post('/', userController.create);
 router.put('/:id', userController.update);
 router.delete('/:id', userController.remove);
+router.get('/:id/questions', userController.getUserQuestions);
 
 export default router;

@@ -8,6 +8,8 @@ import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
 import poll from './routes/poll.js';
 import user from './routes/user.js';
+import question from './routes/question.js';
+import choice from './routes/choice.js';
 
 const app = express();
 
@@ -26,6 +28,9 @@ app.use(
 
 app.use(`${process.env.BASEURL}/polls`, poll);
 app.use(`${process.env.BASEURL}/users`, user);
+app.use(`${process.env.BASEURL}/questions`, question);
+app.use(`${process.env.BASEURL}/choices`, choice);
+
 app.use(errorMiddleware);
 
 connectDatabase();

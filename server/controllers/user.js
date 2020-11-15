@@ -53,3 +53,10 @@ export const remove = catchAsyncErrors(async (req, res, next) => {
   user = await userService.removeUser(req.params.id);
   res.status(204).json({});
 });
+
+export const getUserQuestions = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
+  const userQs = await userService.getUsersQuestions(id);
+  res.status(200).json(userQs);
+});

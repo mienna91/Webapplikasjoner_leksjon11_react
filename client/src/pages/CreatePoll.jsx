@@ -62,8 +62,16 @@ const CreatePoll = ({history}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(questionState);
-    createQuestion(questionState);
+    await createQuestion(questionState)
+      .then((response) => {
+        console.log(response.data._id);
+        questionId.current = response.data.id;
+
+        console.log(questionId);
+      })
+      .then(async () => {
+        await createChoices(choices);
+      });
 
     console.log(choices);
 

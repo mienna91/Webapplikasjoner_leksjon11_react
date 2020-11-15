@@ -20,6 +20,9 @@ const Routes = () => (
         <Route exact path="/">
           <CreateUser />
         </Route>
+        <Route exact path="/results">
+          <CreateUser />
+        </Route>
         <Route path="*">
           <NoMatch />
         </Route>

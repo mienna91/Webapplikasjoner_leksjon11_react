@@ -20,6 +20,11 @@ const Nav = () => (
           Question
         </NavLink>
       </NavMenuItem>
+      <NavMenuItem>
+        <NavLink exact to="/results" activeClassName="active">
+          Results
+        </NavLink>
+      </NavMenuItem>
     </NavMenu>
   </StyledNav>
 );

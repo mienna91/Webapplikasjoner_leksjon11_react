@@ -6,6 +6,7 @@ import MainLayout from '../layouts/MainLayout';
 import Question from '../pages/Question';
 import CreatePoll from '../pages/CreatePoll';
 import CreateUser from '../pages/CreateUser';
+import Results from '../pages/Results';
 
 const Routes = () => (
   <Router>
@@ -21,7 +22,7 @@ const Routes = () => (
           <CreateUser />
         </Route>
         <Route exact path="/results">
-          <CreateUser />
+          <Results />
         </Route>
         <Route path="*">
           <NoMatch />

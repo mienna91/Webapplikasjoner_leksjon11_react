@@ -27,6 +27,15 @@ export const list = catchAsyncErrors(async (req, res, next) => {
 export const create = catchAsyncErrors(async (req, res, next) => {
   const choice = await choiceService.createChoice(req.body);
 
+  if (!req.body) {
+    return next(
+      new ErrorHandler(`Kan ikke sende inn tom kropp til database`, 400)
+    );
+  }
+  if (!req.body.description.length) {
+    return next(new ErrorHandler(`Svaret må være minst 1 karakter langt`, 400));
+  }
+
   res.status(201).json(choice);
 });
 

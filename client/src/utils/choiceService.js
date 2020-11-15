@@ -1,6 +1,6 @@
 import http from './http';
 
-const API_URL = '/questions';
+const API_URL = '/choices';
 
 export const list = async () => {
   try {
@@ -14,15 +14,7 @@ export const get = async (id) => {
   try {
     return await http.get(`${API_URL}/${id}`);
   } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const getChoices = async (id) => {
-  try {
-    return await http.get(`${API_URL}/${id}/choices`);
-  } catch (error) {
-    return error.response.data;
+    return error.respnse.data;
   }
 };
 
@@ -30,7 +22,7 @@ export const create = async (data) => {
   try {
     return await http.post(`${API_URL}`, data);
   } catch (error) {
-    return error.response.data;
+    return error.respnse.data;
   }
 };
 
@@ -40,12 +32,12 @@ export const update = async (data, id) => {
   try {
     poll = get(id);
   } catch (error) {
-    return error.response.data;
+    return error.respnse.data;
   }
   try {
     http.update(data, poll);
   } catch (error) {
-    return error.response.data;
+    return error.respnse.data;
   }
 };
 

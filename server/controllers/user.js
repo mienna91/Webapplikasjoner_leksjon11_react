@@ -25,6 +25,9 @@ export const list = catchAsyncErrors(async (req, res, next) => {
 
 export const create = catchAsyncErrors(async (req, res, next) => {
   const user = await userService.createUser(req.body);
+  if (res.status === 500) {
+    return next(new ErrorHandler(`Intern server feil`, 500));
+  }
   res.status(201).json(user);
 });
 

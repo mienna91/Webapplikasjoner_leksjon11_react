@@ -30,45 +30,43 @@ const CreatePoll = ({history}) => {
     return result;
   };
 
+  const createChoices = async (data) => {
+    const choiceList = [data.choice1, data.choice2, data.choice3, data.choice4];
+
+    const data1 = {
+      description: choiceList[0],
+      question: questionId.current,
+    };
+
+    const data2 = {
+      description: choiceList[1],
+      question: questionId.current,
+    };
+
+    const data3 = {
+      description: choiceList[2],
+      question: questionId.current,
+    };
+
+    const data4 = {
+      description: choiceList[3],
+      question: questionId.current,
+    };
+
+    await createChoice(data1);
+    await createChoice(data2);
+    await createChoice(data3);
+    await createChoice(data4);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await createQuestion(questionState).then((response) => {
-      console.log(response.data._id);
-      questionId.current = response.data.id;
-
-      console.log(questionId);
-      //createChoices(choices);
-    });
-
-    const createChoices = async (data) => {
-      const choiceList = [
-        data.choice1,
-        data.choice2,
-        data.choice3,
-        data.choice4,
-      ];
-
-      await createChoice({
-        description: choiceList[0],
-        question: questionId,
-      });
-      await createChoice({
-        description: choiceList[1],
-        question: questionId,
-      });
-      await createChoice({
-        description: choiceList[2],
-        question: questionId,
-      });
-      await createChoice({
-        description: choiceList[3],
-        question: questionId,
-      });
-    };
+    console.log(questionState);
+    createQuestion(questionState);
 
     console.log(choices);
-    createChoices(choices);
+
     console.log(questionId);
 
     history.push('/question');

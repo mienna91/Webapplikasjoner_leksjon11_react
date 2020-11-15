@@ -9,6 +9,10 @@ const ChoiceSchema = new Schema(
       required: true,
       minlength: [1, 'Svaret må minimum bestå av et tegn'],
     },
+    votes: {
+      type: Number,
+      default: 0,
+    },
     question: {
       type: moongose.Schema.ObjectId,
       ref: 'Question',

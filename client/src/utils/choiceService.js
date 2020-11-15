@@ -26,18 +26,11 @@ export const create = async (data) => {
   }
 };
 
-export const update = async (data, id) => {
-  let poll;
-
+export const update = async (id, data) => {
   try {
-    poll = get(id);
-  } catch (error) {
-    return error.respnse.data;
-  }
-  try {
-    http.update(data, poll);
-  } catch (error) {
-    return error.respnse.data;
+    return await http.put(`${API_URL}/${id}`, data);
+  } catch (err) {
+    return err.response.data;
   }
 };
 

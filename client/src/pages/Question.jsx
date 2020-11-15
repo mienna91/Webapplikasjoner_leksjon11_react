@@ -8,6 +8,7 @@ import {
 } from '../styles/question';
 import { SubmitButton } from '../styles/form';
 import { get, getChoices } from '../utils/questionService';
+import { update } from '../utils/choiceService';
 
 const Question = () => {
   const [question, setQuestion] = useState();
@@ -17,46 +18,84 @@ const Question = () => {
 
   useEffect(() => {
     const fetchQuestion = async () => {
-      const { data, error } = await get('5faa6cae9fb68e56c8d6963d');
-      if (error) {
-        setError(error);
+      const { data, err } = await get('5faa6cae9fb68e56c8d6963d');
+      if (err) {
+        setError(err);
       } else {
         setQuestion(data);
       }
     };
+
+    fetchQuestion();
+  }, []);
+
+  useEffect(() => {
     const fetchChoices = async () => {
-      const { data, error } = await getChoices('5faa6cae9fb68e56c8d6963d');
-      if (error) {
-        setError(error);
+      const { data, err2 } = await getChoices('5faa6cae9fb68e56c8d6963d');
+      if (err2) {
+        setError(err2);
       } else {
         setChoices(data);
       }
     };
-    fetchQuestion();
     fetchChoices();
   }, []);
 
+  const removeAnswer = (answerToBeRemoved) => {
+    const removed = chosenAnswers.filter(
+      (answer) => answer !== answerToBeRemoved
+    );
+    setChosenAnswers([...removed]);
+  };
+
+  const handleCheckedAnswer = (newestChecked) => {
+    // eslint-disable-next-line array-callback-return
+    chosenAnswers.map(
+      (existingCheckedAnswer) => {
+        if (newestChecked === existingCheckedAnswer) {
+          removeAnswer(newestChecked);
+        }
+      },
+      setChosenAnswers((prev) => [newestChecked, ...prev])
+    );
+  };
+
+  const handleAnswerVotes = (e) => {
+    console.log(chosenAnswers);
+    const updateVotes = async () => {
+      chosenAnswers.map((ans) => {
+        update(e.target.id, ans);
+      });
+    };
+    updateVotes();
+    chosenAnswers.map((ans) => removeAnswer(ans));
+  };
+
   return (
     <Container>
-    {choices && choices.map((choice) => )}
       {question && <Title key={question._id}>{question.question}</Title>}
-      <ChoiceWrapper>
-        <Choice type="checkbox" />
-        <ChoiceText>Answer</ChoiceText>
-      </ChoiceWrapper>
-      <ChoiceWrapper>
-        <Choice type="checkbox" />
-        <ChoiceText>Answer</ChoiceText>
-      </ChoiceWrapper>
-      <ChoiceWrapper>
-        <Choice type="checkbox" />
-        <ChoiceText>Answer</ChoiceText>
-      </ChoiceWrapper>
-      <ChoiceWrapper>
-        <Choice type="checkbox" />
-        <ChoiceText>Answer</ChoiceText>
-      </ChoiceWrapper>
-      <SubmitButton>Submit answer</SubmitButton>
+      <div>
+        {choices &&
+          choices.map((choice) => {
+            if (choice === null) return;
+            return (
+              <ChoiceWrapper key={choice._id}>
+                <Choice
+                  type="checkbox"
+                  onChange={() => handleCheckedAnswer(choice)}
+                />
+                <ChoiceText>{choice.description}</ChoiceText>
+              </ChoiceWrapper>
+            );
+          })}
+      </div>
+      <div>
+        {question && (
+          <SubmitButton key={question._id} onClick={handleAnswerVotes}>
+            Submit answer
+          </SubmitButton>
+        )}
+      </div>
     </Container>
   );
 };

@@ -1,11 +1,12 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, componentDidMount } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Form, SubmitButton, Input, Title, Label } from '../styles/form';
 import { GlobalContext } from '../context/GlobalUserContext';
+import { get } from '../utils/createUserService';
 import { create } from '../utils/questionService';
 import { create as createChoice } from '../utils/choiceService';
 
-const CreatePoll = ({history}) => {
+const CreatePoll = ({ history }) => {
   const userId = useContext(GlobalContext);
   const [questionState, setQuestionState] = useState({
     question: '',
@@ -59,6 +60,13 @@ const CreatePoll = ({history}) => {
     await createChoice(data4);
   };
 
+  /* const getUser = async (id) => {
+    await get(id).then((response) => {
+      console.log(response.data);
+      loggedInName.current = response.data.name;
+    });
+  }; */
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('USERID:', userId.state);
@@ -66,16 +74,14 @@ const CreatePoll = ({history}) => {
       .then((response) => {
         console.log(response.data._id);
         questionId.current = response.data.id;
-
-        console.log(questionId);
       })
       .then(async () => {
         await createChoices(choices);
       });
 
     console.log(choices);
-
     console.log(questionId);
+
     userId.updateQuestionState(questionId.current);
     console.log(questionId.current);
 
@@ -99,6 +105,11 @@ const CreatePoll = ({history}) => {
 
   return (
     <Form onSubmit={handleSubmit}>
+      {!userId.state ? (
+        <Title>Lag en bruker for å opprette poll</Title>
+      ) : (
+        <Title>Logget inn som: {userId.state}</Title>
+      )}
       <Title>Create poll</Title>
       <Label htmlFor="question">Specify question</Label>
       <Input

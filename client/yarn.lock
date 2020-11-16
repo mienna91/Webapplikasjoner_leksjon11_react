@@ -6637,6 +6637,11 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.8.6"
     scheduler "^0.19.1"
 
+react-tracked@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/react-tracked/-/react-tracked-1.4.2.tgz#ff5940ab367a18da285729865465842cb927a9bf"
+  integrity sha512-Rjc8tdXPP6peuyph2wTBAQVm/7K0EH1uEmxcWCF072o9Z42mI72YZtTY0KnUB6iT6xEBM/ri35GzhgC/pxNTRg==
+
 react@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"

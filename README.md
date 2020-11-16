@@ -1,14 +1,14 @@
 # Webapplikasjoner_leksjon11_react
 
 ### .ENV variabler for server
-> BASEURL=/api/v1
-NODE_ENV=development
-PORT=5000
-DATABASE_LOCAL=mongodb://localhost:27017/leksjon11
+- BASEURL=/api/v1
+- NODE_ENV=development
+- PORT=5000
+- DATABASE_LOCAL=mongodb://localhost:27017/leksjon11
 
 ### .ENV variabler for client
-> BASE_URL=http://localhost:5000
-API_VERSION=/api/v1
+- BASE_URL=http://localhost:5000
+- API_VERSION=/api/v1
 
 ### For å kjøre appen må du:
 1. Starte opp mongoDb

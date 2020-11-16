@@ -2,13 +2,11 @@ import React, { useState, useContext, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Form, SubmitButton, Input, Title, Label } from '../styles/form';
 import { GlobalContext } from '../context/GlobalUserContext';
-import { GlobalContext2 } from '../context/GlobalQuestionContext';
 import { create } from '../utils/questionService';
 import { create as createChoice } from '../utils/choiceService';
 
 const CreatePoll = ({history}) => {
   const userId = useContext(GlobalContext);
-  const globalQuestion = useContext(GlobalContext2);
   const [questionState, setQuestionState] = useState({
     question: '',
     user: userId.state,
@@ -78,7 +76,7 @@ const CreatePoll = ({history}) => {
     console.log(choices);
 
     console.log(questionId);
-    globalQuestion.updateState(questionId.current);
+    userId.updateQuestionState(questionId.current);
     console.log(questionId.current);
 
     history.push(`/question/${questionId.current}`);

@@ -8,14 +8,16 @@ import {
 } from '../styles/question';
 import { get, getChoices } from '../utils/questionService';
 import { update } from '../utils/choiceService';
+import { GlobalContext } from '../context/GlobalUserContext';
 
 const Results = () => {
   const [question, setQuestion] = useState();
   const [error, setError] = useState(null);
+  const question2 = useContext(GlobalContext);
 
   useEffect(() => {
     const fetchQuestion = async () => {
-      const { data, err } = await getChoices('5fb271e5e13b072b4ca287c3');
+      const { data, err } = await getChoices(question2.questionState);
       if (err) {
         setError(err);
       } else {
@@ -25,36 +27,6 @@ const Results = () => {
 
     fetchQuestion();
   }, []);
-
-  /*const removeAnswer = (answerToBeRemoved) => {
-    const removed = chosenAnswers.filter(
-      (answer) => answer !== answerToBeRemoved
-    );
-    setChosenAnswers([...removed]);
-  };
-
-  const handleCheckedAnswer = (newestChecked) => {
-    // eslint-disable-next-line array-callback-return
-    chosenAnswers.map(
-      (existingCheckedAnswer) => {
-        if (newestChecked === existingCheckedAnswer) {
-          removeAnswer(newestChecked);
-        }
-      },
-      setChosenAnswers((prev) => [newestChecked, ...prev])
-    );
-  };
-
-  const handleAnswerVotes = (e) => {
-    console.log(chosenAnswers);
-    const updateVotes = async () => {
-      chosenAnswers.map((ans) => {
-        update(e.target.id, ans);
-      });
-    };
-    updateVotes();
-    chosenAnswers.map((ans) => removeAnswer(ans));
-  };*/
 
   return (
     <Container>

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "client-dev": "webpack serve --config webpack.development.config.js --mode development",
-    "clean": "rm -rf public"
+    "clean": "rm -rf public",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

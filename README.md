@@ -27,5 +27,7 @@ til et question osv (har en schema løsning som separerer spørsmål og tilknytt
  - Har ikke lagt opp får å vise feil i grensesnittet (har dog satt opp den globale errror håndteringen på serverside)
  - For at du skal kunne lage bruker må navn med, email inneholde valid email adresse (test@test.no f.eks).
  - For å lage spørsmål må spørsmål inneholde teskt samme med hvert svar alternativ. (Ellers går det ikke gjennom, alle feltene er reqiured)
+ 
+ Med det sagt så fungerer backenden som den skal og frontenden er der problemene kommer pga globale staten for user og question ikke består gjennom flere renders.
    
 

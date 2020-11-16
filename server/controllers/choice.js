@@ -1,6 +1,10 @@
+import mongoose from 'mongoose';
+import { ChoiceSchema } from '../models/choice.js';
 import { choiceService } from '../services/index.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
+
+const Choice = mongoose.model('Choice', ChoiceSchema);
 
 export const get = catchAsyncErrors(async (req, res, next) => {
   const choice = await choiceService.getChoiceById(req.params.id);
@@ -40,16 +44,12 @@ export const create = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const update = catchAsyncErrors(async (req, res, next) => {
-  let choice = await choiceService.getChoiceById(req.params.id);
+  const choices = await Choice.updateMany(
+    { _id: { $in: req.body } },
+    { $inc: { votes: 1 } }
+  );
 
-  if (!choice) {
-    return next(
-      new ErrorHandler(`Finner ikke choice med ${req.params.id}`, 404)
-    );
-  }
-
-  choice = await choiceService.updateChoice(req.params.id, req.body);
-  res.status(200).json(choice);
+  res.status(200).json(choices);
 });
 
 export const remove = catchAsyncErrors(async (req, res, next) => {

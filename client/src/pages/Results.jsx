@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Container,
   Title,
@@ -12,11 +12,10 @@ import { update } from '../utils/choiceService';
 const Results = () => {
   const [question, setQuestion] = useState();
   const [error, setError] = useState(null);
-  const [votes, setVotes] = useState([]);
 
   useEffect(() => {
     const fetchQuestion = async () => {
-      const { data, err } = await getChoices('5faa6cae9fb68e56c8d6963d');
+      const { data, err } = await getChoices('5fb271e5e13b072b4ca287c3');
       if (err) {
         setError(err);
       } else {
@@ -59,11 +58,12 @@ const Results = () => {
 
   return (
     <Container>
+      {error && <p>error</p>}
       {question && <Title>Results: {question.question} </Title>}
       <div>
         {question &&
           question.map((q) => {
-            if (question === null) return;
+            if (question === null) return error;
             return (
               <div key={question.votes}>
                 <ChoiceText key={question._id}>

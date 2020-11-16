@@ -1,15 +1,17 @@
 import React, { useState, useContext, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Form, SubmitButton, Input, Title, Label } from '../styles/form';
-import { Context } from '../context/GlobalUserContext';
+import { GlobalContext } from '../context/GlobalUserContext';
+import { GlobalContext2 } from '../context/GlobalQuestionContext';
 import { create } from '../utils/questionService';
 import { create as createChoice } from '../utils/choiceService';
 
 const CreatePoll = ({history}) => {
-  const [state, setState] = useContext(Context);
+  const userId = useContext(GlobalContext);
+  const globalQuestion = useContext(GlobalContext2);
   const [questionState, setQuestionState] = useState({
     question: '',
-    user: '5faa6844ea4e143a20c9b361',
+    user: userId.state,
   });
 
   const [choices, setChoices] = useState({
@@ -61,7 +63,7 @@ const CreatePoll = ({history}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log('USERID:', userId.state);
     await createQuestion(questionState)
       .then((response) => {
         console.log(response.data._id);
@@ -76,8 +78,10 @@ const CreatePoll = ({history}) => {
     console.log(choices);
 
     console.log(questionId);
+    globalQuestion.updateState(questionId.current);
+    console.log(questionId.current);
 
-    history.push('/question');
+    history.push(`/question/${questionId.current}`);
   };
 
   const updateChoiceValue = (event) => {
@@ -91,7 +95,7 @@ const CreatePoll = ({history}) => {
   const handleQuestionChanges = (event) => {
     setQuestionState({
       question: event.target.value,
-      user: '5faa6844ea4e143a20c9b361',
+      user: userId.state,
     });
   };
 

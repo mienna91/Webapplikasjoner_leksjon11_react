@@ -1,18 +1,32 @@
 import React, { createContext, useState } from 'react';
 
-const initialState = {
-  name: '',
-  email: '',
-};
+export const GlobalContext = createContext({
+  state: '',
+  questionState: '',
+  updateState: (user) => {},
+  updateQuestionState: (question) => {},
+});
 
-const Context = createContext();
-
-const GlobalUserState = ({children}) => {
+export const GlobalUserState = ({children}) => {
   const [state, setState] = useState();
 
+  const updateState = (user) => {
+    setState(user);
+  };
+
+  const [questionState, setQuestionState] = useState();
+
+  const updateQuestionState = (question) => {
+    setQuestionState(question);
+  };
+
   return (
-    <Context.Provider value={[state, setState]}>{children}</Context.Provider>
+    <GlobalContext.Provider
+      value={{ state, questionState, updateState, updateQuestionState }}
+    >
+      {children}
+    </GlobalContext.Provider>
   );
 };
 
-export { GlobalUserState, Context };
+export default GlobalUserState;

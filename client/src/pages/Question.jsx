@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { useParams, withRouter } from 'react-router-dom';
 import {
   Container,
   Title,
@@ -9,16 +10,22 @@ import {
 import { SubmitButton } from '../styles/form';
 import { get, getChoices } from '../utils/questionService';
 import { update } from '../utils/choiceService';
+import { GlobalContext } from '../context/GlobalUserContext';
 
-const Question = () => {
+const Question = ({history}) => {
   const [question, setQuestion] = useState();
   const [choices, setChoices] = useState();
   const [error, setError] = useState(null);
   const [chosenAnswers, setChosenAnswers] = useState([]);
+  const questionId = useRef();
+  const questionState = useContext(GlobalContext);
+
+  const { id } = useParams();
+  questionId.current = id;
 
   useEffect(() => {
     const fetchQuestion = async () => {
-      const { data, err } = await get('5faa6cae9fb68e56c8d6963d');
+      const { data, err } = await get(questionId.current);
       if (err) {
         setError(err);
       } else {
@@ -31,7 +38,7 @@ const Question = () => {
 
   useEffect(() => {
     const fetchChoices = async () => {
-      const { data, err2 } = await getChoices('5faa6cae9fb68e56c8d6963d');
+      const { data, err2 } = await getChoices(questionId.current);
       if (err2) {
         setError(err2);
       } else {
@@ -60,19 +67,19 @@ const Question = () => {
     );
   };
 
-  const handleAnswerVotes = (e) => {
+  const handleAnswerVotes = async (e) => {
     console.log(chosenAnswers);
-    const updateVotes = async () => {
-      chosenAnswers.map((ans) => {
-        update(e.target.id, ans);
-      });
-    };
-    updateVotes();
+    const updates = await update(chosenAnswers);
+    console.log(updates);
     chosenAnswers.map((ans) => removeAnswer(ans));
+    console.log(questionId.current);
+    console.log(id);
+    history.push(`/results/`);
   };
 
   return (
     <Container>
+      {error && <p>{error}</p>}
       {question && <Title key={question._id}>{question.question}</Title>}
       <div>
         {choices &&
@@ -100,4 +107,4 @@ const Question = () => {
   );
 };
 
-export default Question;
+export default withRouter(Question);

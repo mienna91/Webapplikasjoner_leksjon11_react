@@ -2,7 +2,7 @@ import moongose from 'mongoose';
 
 const { Schema } = moongose;
 
-const ChoiceSchema = new Schema(
+export const ChoiceSchema = new Schema(
   {
     description: {
       type: String,
@@ -22,4 +22,5 @@ const ChoiceSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-export default moongose.model('Choice', ChoiceSchema);
+const Choice = moongose.model('Choice', ChoiceSchema);
+export default Choice;

@@ -1,27 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Context } from '../context/GlobalUserContext';
 import { Form, SubmitButton, Input, Title, Label } from '../styles/form';
-import { create } from '../utils/createUserService';
+import { GlobalContext } from '../context/GlobalUserContext';
+import { create, get } from '../utils/createUserService';
 
 const CreateUser = ({ history }) => {
-  const [state, setState] = useContext(Context);
+  const global = useContext(GlobalContext);
   const [user, setUser] = useState({
     name: '',
     email: '',
   });
+  const userId = useRef();
 
   const createUser = async (data) => {
-    await create(data);
+    await create(data).then((response) => (userId.current = response._id));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     console.log(user);
-    createUser(user);
-    setState(user);
-    console.log(state);
+    await createUser(user);
+    console.log(userId.current);
+
+    global.updateState(userId.current);
 
     setUser({
       name: '',

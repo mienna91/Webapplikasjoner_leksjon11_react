@@ -16,7 +16,7 @@ const Nav = () => (
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink exact to="/question" activeClassName="active">
+        <NavLink exact to="/question:id" activeClassName="active">
           Question
         </NavLink>
       </NavMenuItem>

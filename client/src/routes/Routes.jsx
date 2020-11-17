@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import NoMatch from '../components/NoMatch';
 import { GlobalUserState } from '../context/GlobalUserContext';
-import { GlobalQuestionState } from '../context/GlobalQuestionContext';
 import MainLayout from '../layouts/MainLayout';
 import Question from '../pages/Question';
 import CreatePoll from '../pages/CreatePoll';

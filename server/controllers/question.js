@@ -56,7 +56,8 @@ export const remove = catchAsyncErrors(async (req, res, next) => {
 
 export const listChoices = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
-  const user = await questionService.listQuestionChoices(id);
-  res.status(200).json(user);
+
+  const choices = await questionService.listQuestionChoices(id);
+
+  res.status(200).json(choices);
 });

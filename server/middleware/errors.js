@@ -30,6 +30,11 @@ export default (err, req, res, next) => {
       const message = `Duplikat av ${Object.keys(err.keyValue)}`;
       error = new ErrorHandler(message, 400);
     }
+
+    if (err.name === 'TypeError') {
+      const message = `id er ikke definert`;
+      error = new ErrorHandler(message, 400);
+    }
   }
 
   res.status(err.statusCode).json({

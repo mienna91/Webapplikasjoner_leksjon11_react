@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, componentDidMount } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Form, SubmitButton, Input, Title, Label } from '../styles/form';
 import { GlobalContext } from '../context/GlobalUserContext';
@@ -106,7 +106,7 @@ const CreatePoll = ({ history }) => {
   return (
     <Form onSubmit={handleSubmit}>
       {!userId.state ? (
-        <Title>Lag en bruker for å opprette poll</Title>
+        <Title>Logget inn som: guest</Title>
       ) : (
         <Title>Logget inn som: {userId.state}</Title>
       )}

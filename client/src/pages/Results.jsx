@@ -1,25 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  Container,
-  Title,
-  ChoiceWrapper,
-  Choice,
-  ChoiceText,
-} from '../styles/question';
-import { get, getChoices } from '../utils/questionService';
-import { update } from '../utils/choiceService';
+import { Container, Title, ChoiceText } from '../styles/question';
+import { getChoices } from '../utils/questionService';
 import { GlobalContext } from '../context/GlobalUserContext';
 
 const Results = () => {
-  const [question, setQuestion] = useState();
+  const [question, setQuestion] = useState(null);
   const [error, setError] = useState(null);
   const question2 = useContext(GlobalContext);
 
   useEffect(() => {
     const fetchQuestion = async () => {
       const { data, err } = await getChoices(question2.questionState);
-      if (err) {
-        setError(err);
+      console.log(data.success);
+      if (data.success === false) {
+        setError(data.message);
+        console.log('DEN SATT ERROR');
       } else {
         setQuestion(data);
       }
@@ -30,10 +25,10 @@ const Results = () => {
 
   return (
     <Container>
-      {error && <p>error</p>}
+      {error && <Title>{error}</Title>}
       {question && <Title>Results: {question.question} </Title>}
       <div>
-        {question &&
+        {question !== null ? (
           question.map((q) => {
             if (question === null) return error;
             return (
@@ -43,7 +38,10 @@ const Results = () => {
                 </ChoiceText>
               </div>
             );
-          })}
+          })
+        ) : (
+          <Title>Ingen resultater å vise foreløpig</Title>
+        )}
       </div>
     </Container>
   );

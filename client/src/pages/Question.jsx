@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import {
   Container,
@@ -10,7 +10,6 @@ import {
 import { SubmitButton } from '../styles/form';
 import { get, getChoices } from '../utils/questionService';
 import { update } from '../utils/choiceService';
-import { GlobalContext } from '../context/GlobalUserContext';
 
 const Question = ({history}) => {
   const [question, setQuestion] = useState();
@@ -18,7 +17,6 @@ const Question = ({history}) => {
   const [error, setError] = useState(null);
   const [chosenAnswers, setChosenAnswers] = useState([]);
   const questionId = useRef();
-  const questionState = useContext(GlobalContext);
 
   const { id } = useParams();
   questionId.current = id;
@@ -26,8 +24,10 @@ const Question = ({history}) => {
   useEffect(() => {
     const fetchQuestion = async () => {
       const { data, err } = await get(questionId.current);
-      if (err) {
-        setError(err);
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
       } else {
         setQuestion(data);
       }
@@ -39,7 +39,7 @@ const Question = ({history}) => {
   useEffect(() => {
     const fetchChoices = async () => {
       const { data, err2 } = await getChoices(questionId.current);
-      if (err2) {
+      if (data.success === false) {
         setError(err2);
       } else {
         setChoices(data);
@@ -79,7 +79,7 @@ const Question = ({history}) => {
 
   return (
     <Container>
-      {error && <p>{error}</p>}
+      {error && <Title>{error}</Title>}
       {question && <Title key={question._id}>{question.question}</Title>}
       <div>
         {choices &&
